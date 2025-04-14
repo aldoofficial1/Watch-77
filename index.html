@@ -13,6 +13,30 @@
       margin: 0;
       padding: 0;
     }
+@keyframes borderGlow {
+  0% { border-color: #ff5733; }
+  25% { border-color: #ffb533; }
+  50% { border-color: #33ff57; }
+  75% { border-color: #5733ff; }
+  100% { border-color: #ff5733; }
+}
+
+.video-container {
+  width: 360px;
+  margin: 0 auto 40px auto;
+  padding: 15px;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  border: 2px solid #ff5733; /* Awal border warna */
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: borderGlow 2s infinite; /* Menambahkan animasi kelap-kelip */
+}
+
+.video-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+}
 
     .header {
       display: flex;
