@@ -5,8 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <title>Watch 77</title>
+  <script>
+        let originalTitle = document.title; // Menyimpan judul asli
+        let isFlashing = false;
+
+        // Fungsi untuk mengubah judul
+        function flashTitle() {
+            if (isFlashing) {
+                document.title = originalTitle;  // Kembali ke judul asli
+            } else {
+                document.title = "Watch 77 Official"; // Judul berkedip
+            }
+            isFlashing = !isFlashing;  // Toggle status kedip
+        }
+
+        // Set interval untuk flash judul setiap 1 detik
+        setInterval(flashTitle, 1000);
+  </script>
       <!-- Menyematkan Favicon dari URL gambar -->
-    <link rel="icon" href="https://k.top4top.io/p_3393q7j561.jpg" type="image/png">
+    <link rel="icon" href="https://d.top4top.io/p_3393cdreq1.jpg" type="image/png">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -521,7 +538,7 @@
   <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
               font-size: 80px; color: rgba(255, 255, 255, 0.03); pointer-events: none;">
   </div>
-  <p>&copy; 2025 Aldo OfficialR.</p>
+  <p>&copy; 2025 Watch 77 Official</p>
 </footer>
 
 </body>
