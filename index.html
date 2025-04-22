@@ -111,7 +111,75 @@
 .search-results-bar strong {
   color: orange;
 }
+#videoModal {
+display: none;
+position: fixed;
+top: 0; left: 0; right: 0; bottom: 0;
+background-color: #000;
+z-index: 1000;
+justify-content: center;
+align-items: center;
+padding: 20px;
+}
 
+#modalVideo {
+width: 90%;
+max-width: 800px;
+aspect-ratio: 16 / 9;
+background: #000;
+border-radius: 8px;
+object-fit: contain;
+}
+
+#modalTitle {
+color: orange;
+text-align: center;
+margin-bottom: 10px;
+}
+
+.btn-container {
+display: flex;
+justify-content: center;
+gap: 20px;
+margin-top: 10px;
+}
+
+.like-btn, .unlike-btn {
+background-color: #ff6600;
+color: #fff;
+padding: 10px 20px;
+font-size: 16px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: transform 0.2s;
+}
+
+.like-btn, .unlike-btn {
+background-color: #aaa;
+cursor: not-allowed;
+}
+
+.like-btn:hover, .unlike-btn:hover {
+transform: scale(1.1);
+}
+
+.result {
+color: white;
+margin-top: 10px;
+font-size: 16px;
+}
+
+@media (max-width: 500px) {
+#modalVideo {
+width: 100%;
+}
+
+#modalTitle {
+font-size: 16px;
+margin-bottom: 6px;
+}
+  }
 .filter-btn {
   background: none;
   border: none;
@@ -205,9 +273,100 @@
     </div>
     
     <!-- Tambahkan video lainnya di sini -->
+      <!-- Modal Video -->
+  <div id="videoModal">
+<div style="display: flex; flex-direction: column; align-items: center;">
+<h2 id="modalTitle"></h2>
+<video id="modalVideo" controls autoplay></video>
+<div class="btn-container">
+<button id="likeBtn" class="like-btn">Like</button>
+<button id="unlikeBtn" class="unlike-btn">Unlike</button>
+</div>
+<div class="result">
+<span id="likeResult">0% Likes</span> | <span id="unlikeResult">0% Unlikes</span>
+</div>
+</div>
+  </div>
   </div>
 
   <script>
+ let likeClicked = false;
+let unlikeClicked = false;
+
+// Menyimpan data jumlah Like dan Unlike untuk video tertentu
+let likeCount = 0;
+let unlikeCount = 0;
+document.querySelectorAll('.video-card').forEach(card => {
+card.addEventListener('click', () => {
+const videoUrl = card.getAttribute('data-video');
+const videoTitle = card.querySelector('.title').textContent;
+
+const modal = document.getElementById('videoModal');
+const video = document.getElementById('modalVideo');
+const title = document.getElementById('modalTitle');
+const likeBtn = document.getElementById('likeBtn');
+const unlikeBtn = document.getElementById('unlikeBtn');
+const likeResult = document.getElementById('likeResult');
+const unlikeResult = document.getElementById('unlikeResult');
+
+video.innerHTML = `<source src="${videoUrl}" type="video/mp4">`;
+video.load();
+video.play();
+
+title.textContent = videoTitle;
+
+// Reset like dan unlike
+likeBtn.disabled = false;
+unlikeBtn.disabled = false;
+likeClicked = false;
+unlikeClicked = false;
+
+likeBtn.addEventListener('click', () => {
+if (!likeClicked) {
+likeBtn.disabled = true;
+unlikeBtn.disabled = true;
+likeClicked = true;
+likeCount++;
+updateResults();
+alert('You liked this video!');
+}
+});
+
+unlikeBtn.addEventListener('click', () => {
+if (!unlikeClicked) {
+likeBtn.disabled = true;
+unlikeBtn.disabled = true;
+unlikeClicked = true;
+unlikeCount++;
+updateResults();
+alert('You disliked this video!');
+}
+});
+
+modal.style.display = 'flex';
+});
+
+});
+
+// Fungsi untuk menghitung persentase Like dan Unlike
+function updateResults() {
+const totalVotes = likeCount + unlikeCount;
+const likePercentage = totalVotes > 0 ? (likeCount / totalVotes) * 100 : 0;
+const unlikePercentage = totalVotes > 0 ? (unlikeCount / totalVotes) * 100 : 0;
+
+document.getElementById('likeResult').textContent = `${Math.round(likePercentage)}% Likes`;
+document.getElementById('unlikeResult').textContent = `${Math.round(unlikePercentage)}% Unlikes`;
+}
+
+// Tutup modal jika klik luar area video
+document.getElementById('videoModal').addEventListener('click', (e) => {
+if (e.target.id === 'videoModal') {
+const modal = document.getElementById('videoModal');
+const video = document.getElementById('modalVideo');
+video.pause();
+modal.style.display = 'none';
+}
+});
 function filterVideos() {
   const input = document.getElementById('searchInput').value.trim();
   const cards = document.querySelectorAll('.video-card');
