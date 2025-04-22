@@ -367,30 +367,6 @@ video.pause();
 modal.style.display = 'none';
 }
 });
-function filterVideos() {
-  const input = document.getElementById('searchInput').value.trim();
-  const cards = document.querySelectorAll('.video-card');
-  const bar = document.getElementById('searchBar');
-  const querySpan = document.getElementById('searchQuery');
-
-  // filter video cards
-  let matchCount = 0;
-  cards.forEach(card => {
-    const title = card.querySelector('.title').innerText.toLowerCase();
-    const ok = title.includes(input.toLowerCase());
-    card.style.display = ok ? 'block' : 'none';
-    if (ok) matchCount++;
-  });
-
-  // update search-results-bar
-  if (input === '') {
-    bar.style.display = 'none';
-  } else {
-    querySpan.textContent = input;
-    bar.style.display = 'flex';
-  }
-}
-
 
     // Ambil durasi dari video
     document.addEventListener("DOMContentLoaded", () => {
