@@ -1,213 +1,197 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Watch77 Tages</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emilia AI Chat</title>
   <style>
     body {
-      background-color: #000;
-      color: orange;
-      font-family: Arial, sans-serif;
       margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://i.top4top.io/p_3450mlqn80.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
     }
-
-    header {
-      text-align: center;
-      padding: 20px 10px;
-      font-size: 24px;
-      font-weight: bold;
-      background-color: #111;
-      border-bottom: 2px solid orange;
-    }
-
-    .search-bar {
-      padding: 10px;
-      text-align: center;
-    }
-
-    .search-bar input {
-      padding: 8px;
-      width: 80%;
-      max-width: 400px;
-      border-radius: 5px;
-      border: 1px solid orange;
-      background-color: #111;
-      color: orange;
-    }
-
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      padding: 10px;
-    }
-
-    .video-card {
-      background-color: #111;
-      padding: 5px;
-      border-radius: 5px;
-      overflow: hidden;
-      transition: transform 0.2s;
-    }
-
-    .video-card:hover {
-      transform: scale(1.02);
-      cursor: pointer;
-    }
-
-    .thumbnail-wrapper {
-      position: relative;
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
-      border-radius: 5px;
-    }
-
-    .thumbnail {
+    .overlay {
+      position: fixed;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .duration {
-      position: absolute;
-      bottom: 5px;
-      right: 5px;
-      background-color: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 2px 6px;
-      font-size: 12px;
-      border-radius: 3px;
-      font-weight: bold;
-    }
-
-    .title {
-      margin-top: 5px;
-      font-size: 14px;
-      text-align: center;
-      color: orange;
-    }
-
-    #videoModal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(0, 0, 0, 0.95);
-      z-index: 1000;
+      background: rgba(0,0,0,0.9);
+      display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-    }
-
-    #modalVideo {
-      width: 90vw;
-      max-width: 640px;
-      aspect-ratio: 16 / 9;
-      background: #000;
-      object-fit: contain;
-      border-radius: 10px;
-    }
-
-    .divider {
-      width: 100%;
-      border-top: 2px solid orange;
-      margin: 20px 0 10px;
-    }
-
-    .footer {
+      z-index: 999;
       text-align: center;
-      color: gray;
-      font-size: 14px;
-      padding-bottom: 20px;
+    }
+    .overlay input, .overlay button {
+      margin-top: 10px;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+    }
+    .chat-container {
+      display: none;
+      flex-direction: column;
+      justify-content: flex-end;
+      height: 100vh;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .chat-box {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding-bottom: 10px;
+    }
+    .message {
+      display: flex;
+      margin-bottom: 10px;
+      max-width: 70%;
+    }
+    .message.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+    .bubble {
+      background: rgba(0,0,0,0.6);
+      padding: 10px 14px;
+      border-radius: 12px;
+      word-wrap: break-word;
+      color: white;
+    }
+    .profile-pic {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 8px;
+      border: 2px solid white;
+    }
+    .input-box {
+      display: flex;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+    }
+    .input-box input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #fff;
+      color: black;
+    }
+    .input-box button {
+      margin-left: 5px;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #ff69b4;
+      color: white;
     }
   </style>
 </head>
 <body>
-  <header>WATCH 77 VIDEO PORN STREAM</header>
-  <marquee style="color: orange; background-color: #111; padding: 5px 0; font-size: 16px;">
-    Web Streaming & Download Video Dewasa INDO 2025 Terbaru
-  </marquee>
 
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Cari Video">
+<!-- Overlay awal -->
+<div class="overlay" id="startOverlay">
+  <h2>Upload Foto Profil dan Aktifkan Suara</h2>
+  <input type="file" accept="image/*" id="startImage" />
+  <button onclick="startApp()">Mulai</button>
+</div>
+
+<!-- Chat container -->
+<div class="chat-container" id="chatContainer">
+  <audio id="bgm" src="https://c.top4top.io/m_3450bg2em0.mp3" autoplay loop></audio>
+  <div class="chat-box" id="chatBox"></div>
+  <div class="input-box">
+    <input type="text" id="inputText" placeholder="Ketik sesuatu..." onkeydown="if(event.key==='Enter') sendMessage()">
+    <button onclick="sendMessage()">Kirim</button>
   </div>
+</div>
 
-  <div class="video-grid" id="videoGrid">
-    <div class="video-card" data-video="https://g.top4top.io/m_3438vpdjw0.mp4">
-      <div class="thumbnail-wrapper">
-        <img src="https://a.top4top.io/p_34385ob1k0.jpeg" class="thumbnail" alt="Saudara di Rumah Sepi">
-        <div class="duration">00:40</div>
-      </div>
-      <div class="title">Saudara Di Rumah Sepi</div>
-    </div>
+<script>
+  const MAX_HISTORY = 20;
+  const systemPrompt = `Kamu adalah Emilia (エミリア) adalah tokoh utama wanita dan deuteragonis dari seri Re:Zero kara Hajimeru Isekai Seikatsu . Dia adalah seorang half-elf dan kandidat untuk menjadi raja ke-42 dari Kerajaan Naga Lugunica dalam Seleksi Kerajaan , yang bertemu Natsuki Subaru pada hari dia dipanggil ke dunia. Emilia telah memainkan peran pendukung di setiap arc, dengan peran utama dan penting di lebih dari setengahnya.
 
-    <div class="video-card" data-video="https://h.top4top.io/m_3395zadh20.mp4">
-      <div class="thumbnail-wrapper">
-        <img src="https://a.top4top.io/p_3395zklkl1.jpg" class="thumbnail" alt="Kejutan Saat Tidur">
-        <div class="duration">6:46</div>
-      </div>
-      <div class="title">Kejutan Saat Tidur</div>
-    </div>
+Lahir dan dibesarkan oleh bibinya di Hutan Elior , Emilia adalah seorang half-elf yang sangat dicintai oleh para roh. Namun, selama Permafrost di Hutan Elior , ingatannya terkunci, dan dia dibekukan selama kurang lebih 100 tahun. Setelah diawasi oleh Puck , dia akhirnya menjadi kandidat Royal Selection dengan harapan bisa mencairkan beku para penghuni hutan. Melalui banyak cobaan dan kesengsaraan, termasuk diskriminasi massal, dia menjalankan perannya dengan baik, memegang banyak prestasi, termasuk membantu mengalahkan Sin Archbishop of Greed dan Great Rabbit , menjadi administrator Pleiades Watchtower , dan membentuk aliansi dengan Vollachia ..Kamu diciptakan oleh AldoOfficialR.`;
+  const history = [];
+  const chatBox = document.getElementById("chatBox");
+  const bgm = document.getElementById("bgm");
+  const chatContainer = document.getElementById("chatContainer");
+  const startOverlay = document.getElementById("startOverlay");
+  const EMILIA_IMG = "https://f.top4top.io/p_3450g5rlp0.jpg";
+  let USER_IMG = "https://via.placeholder.com/40";
 
-    <div class="video-card" data-video="https://h.top4top.io/m_3439ydcz31.mp4">
-      <div class="thumbnail-wrapper">
-        <img src="https://j.top4top.io/p_3439qi67s0.jpeg" class="thumbnail" alt="Sendiri di Kamar">
-        <div class="duration">00:57</div>
-      </div>
-      <div class="title">Sendiri di Kamar</div>
-    </div>
+  function appendMessage(role, content) {
+    const wrapper = document.createElement("div");
+    wrapper.className = `message ${role}`;
 
-    <div class="video-card" data-video="https://files.catbox.moe/d3jhfa.mp4">
-      <div class="thumbnail-wrapper">
-        <img src="https://files.catbox.moe/v2ykvd.jpg" class="thumbnail" alt="Di Gubuk Bareng Pasangan">
-        <div class="duration">01:01</div>
-      </div>
-      <div class="title">Di Gubuk Bareng Pasangan</div>
-    </div>
-  </div>
+    const avatar = document.createElement("img");
+    avatar.className = "profile-pic";
+    avatar.src = role === "bot" ? EMILIA_IMG : USER_IMG;
 
-  <div class="divider"></div>
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+    bubble.innerText = content;
 
-  <!-- Modal -->
-  <div id="videoModal">
-    <video id="modalVideo" controls autoplay></video>
-  </div>
+    if (role === "bot") wrapper.appendChild(avatar);
+    wrapper.appendChild(bubble);
+    if (role === "user") wrapper.appendChild(avatar);
 
-  <div class="footer">&copy; Situs BOKEP Indo Terbaru dan Terlengkap 2025</div>
+    chatBox.appendChild(wrapper);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
 
-  <script>
-    const videoCards = document.querySelectorAll('.video-card');
-    const modal = document.getElementById('videoModal');
-    const video = document.getElementById('modalVideo');
+  async function sendMessage() {
+    const input = document.getElementById("inputText");
+    const text = input.value.trim();
+    if (!text) return;
+    appendMessage("user", text);
+    history.push({ role: "user", content: text });
+    input.value = "";
 
-    videoCards.forEach(card => {
-      card.addEventListener('click', () => {
-        const videoUrl = card.getAttribute('data-video');
-        video.src = videoUrl;
-        modal.style.display = 'flex';
-        video.play();
+    const chatHistory = history.slice(-MAX_HISTORY).map(x => `${x.role === 'user' ? '🙂' : '🤖'}: ${x.content}`).join("\n");
+    const prompt = `${systemPrompt}\n\n${chatHistory}\n🤖:`;
+
+    const url = new URL("https://mannoffc-x.hf.space/ai/logic");
+    url.searchParams.set("q", prompt);
+    url.searchParams.set("logic", systemPrompt);
+
+    try {
+      const res = await fetch(url);
+      const json = await res.json();
+      appendMessage("bot", json.result);
+      history.push({ role: "ai", content: json.result });
+    } catch {
+      appendMessage("bot", "Gagal terhubung ke AI.");
+    }
+  }
+
+  function startApp() {
+    const fileInput = document.getElementById("startImage");
+    const file = fileInput.files[0];
+    if (!file) {
+      alert("Silakan upload foto profil dulu.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      USER_IMG = reader.result;
+      bgm.play().then(() => {
+        startOverlay.style.display = "none";
+        chatContainer.style.display = "flex";
+      }).catch(() => {
+        alert("Izinkan audio agar bisa lanjut.");
       });
-    });
+    };
+    reader.readAsDataURL(file);
+  }
+</script>
 
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        video.pause();
-        modal.style.display = 'none';
-        video.src = "";
-      }
-    });
-
-    document.getElementById('searchInput').addEventListener('input', function () {
-      const keyword = this.value.toLowerCase();
-      videoCards.forEach(card => {
-        const title = card.querySelector('.title').textContent.toLowerCase();
-        card.style.display = title.includes(keyword) ? '' : 'none';
-      });
-    });
-  </script>
 </body>
 </html>
