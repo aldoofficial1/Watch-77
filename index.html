@@ -38,9 +38,6 @@
       height: 100vh;
       padding: 10px;
       box-sizing: border-box;
-      position: relative;
-      z-index: 2;
-      background: rgba(0, 0, 0, 0.4);
     }
     .chat-box {
       flex: 1;
@@ -49,10 +46,10 @@
       flex-direction: column;
       align-items: flex-start;
       padding-bottom: 10px;
+      scroll-behavior: smooth;
     }
     .message {
       display: flex;
-      align-items: flex-end;
       margin-bottom: 10px;
       max-width: 70%;
     }
@@ -74,7 +71,6 @@
       object-fit: cover;
       margin: 0 8px;
       border: 2px solid white;
-      flex-shrink: 0;
     }
     .input-box {
       display: flex;
@@ -120,7 +116,7 @@
 
 <script>
   const MAX_HISTORY = 20;
-  const systemPrompt = `Kamu adalah Emilia (エミリア) adalah tokoh utama wanita dan deuteragonis dari seri Re:Zero kara Hajimeru Isekai Seikatsu ... Kamu diciptakan oleh AldoOfficialR.`;
+  const systemPrompt = `Kamu adalah Emilia (エミリア)... diciptakan oleh AldoOfficialR.`; // Potong untuk ringkas
   const history = [];
   const chatBox = document.getElementById("chatBox");
   const bgm = document.getElementById("bgm");
@@ -128,6 +124,7 @@
   const startOverlay = document.getElementById("startOverlay");
   const EMILIA_IMG = "https://f.top4top.io/p_3450g5rlp0.jpg";
   let USER_IMG = "https://via.placeholder.com/40";
+  let userMessageCount = 0;
 
   function appendMessage(role, content) {
     const wrapper = document.createElement("div");
@@ -141,12 +138,12 @@
     bubble.className = "bubble";
     bubble.innerText = content;
 
-    if (role === "user") {
-      wrapper.appendChild(bubble);
+    if (role === "bot") {
       wrapper.appendChild(avatar);
+      wrapper.appendChild(bubble);
     } else {
-      wrapper.appendChild(avatar);
       wrapper.appendChild(bubble);
+      wrapper.appendChild(avatar);
     }
 
     chatBox.appendChild(wrapper);
@@ -157,6 +154,8 @@
     const input = document.getElementById("inputText");
     const text = input.value.trim();
     if (!text) return;
+    
+    userMessageCount++;
     appendMessage("user", text);
     history.push({ role: "user", content: text });
     input.value = "";
@@ -192,6 +191,9 @@
       bgm.play().then(() => {
         startOverlay.style.display = "none";
         chatContainer.style.display = "flex";
+        setTimeout(() => {
+          chatBox.scrollTop = chatBox.scrollHeight;
+        }, 100);
       }).catch(() => {
         alert("Izinkan audio agar bisa lanjut.");
       });
