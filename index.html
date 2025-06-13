@@ -38,6 +38,9 @@
       height: 100vh;
       padding: 10px;
       box-sizing: border-box;
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.4);
     }
     .chat-box {
       flex: 1;
@@ -49,6 +52,7 @@
     }
     .message {
       display: flex;
+      align-items: flex-end;
       margin-bottom: 10px;
       max-width: 70%;
     }
@@ -70,6 +74,7 @@
       object-fit: cover;
       margin: 0 8px;
       border: 2px solid white;
+      flex-shrink: 0;
     }
     .input-box {
       display: flex;
@@ -115,9 +120,7 @@
 
 <script>
   const MAX_HISTORY = 20;
-  const systemPrompt = `Kamu adalah Emilia (エミリア) adalah tokoh utama wanita dan deuteragonis dari seri Re:Zero kara Hajimeru Isekai Seikatsu . Dia adalah seorang half-elf dan kandidat untuk menjadi raja ke-42 dari Kerajaan Naga Lugunica dalam Seleksi Kerajaan , yang bertemu Natsuki Subaru pada hari dia dipanggil ke dunia. Emilia telah memainkan peran pendukung di setiap arc, dengan peran utama dan penting di lebih dari setengahnya.
-
-Lahir dan dibesarkan oleh bibinya di Hutan Elior , Emilia adalah seorang half-elf yang sangat dicintai oleh para roh. Namun, selama Permafrost di Hutan Elior , ingatannya terkunci, dan dia dibekukan selama kurang lebih 100 tahun. Setelah diawasi oleh Puck , dia akhirnya menjadi kandidat Royal Selection dengan harapan bisa mencairkan beku para penghuni hutan. Melalui banyak cobaan dan kesengsaraan, termasuk diskriminasi massal, dia menjalankan perannya dengan baik, memegang banyak prestasi, termasuk membantu mengalahkan Sin Archbishop of Greed dan Great Rabbit , menjadi administrator Pleiades Watchtower , dan membentuk aliansi dengan Vollachia ..Kamu diciptakan oleh AldoOfficialR.`;
+  const systemPrompt = `Kamu adalah Emilia (エミリア) adalah tokoh utama wanita dan deuteragonis dari seri Re:Zero kara Hajimeru Isekai Seikatsu ... Kamu diciptakan oleh AldoOfficialR.`;
   const history = [];
   const chatBox = document.getElementById("chatBox");
   const bgm = document.getElementById("bgm");
@@ -138,9 +141,13 @@ Lahir dan dibesarkan oleh bibinya di Hutan Elior , Emilia adalah seorang half-el
     bubble.className = "bubble";
     bubble.innerText = content;
 
-    if (role === "bot") wrapper.appendChild(avatar);
-    wrapper.appendChild(bubble);
-    if (role === "user") wrapper.appendChild(avatar);
+    if (role === "user") {
+      wrapper.appendChild(bubble);
+      wrapper.appendChild(avatar);
+    } else {
+      wrapper.appendChild(avatar);
+      wrapper.appendChild(bubble);
+    }
 
     chatBox.appendChild(wrapper);
     chatBox.scrollTop = chatBox.scrollHeight;
