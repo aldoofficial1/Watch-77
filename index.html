@@ -12,12 +12,18 @@
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
       -webkit-touch-callout: none;
+      background-color: transparent;
     }
 
-    html, body {
+    html {
+      background-color: #0c0c0c;
+      overscroll-behavior: none;
+    }
+
+    body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       font-family: 'Montserrat', sans-serif;
@@ -79,10 +85,6 @@
     .btn:hover {
       background: #00cc7a;
       box-shadow: 0 0 15px #00ff9c;
-    }
-
-    .btn:focus {
-      outline: none;
     }
 
     .main {
@@ -192,14 +194,14 @@
     <div id="produk" class="section">
       <input type="text" id="searchInput" placeholder="Cari produk..." onkeyup="filterProduk()">
       <div class="product-grid" id="produkGrid">
-        <div class="product-card"><div class="product-title">Panel Pterodactyl</div><div class="product-desc">Panel hosting bot / tools menggunakan Pterodactyl. Stabil, aman, dan cepat.</div></div>
-        <div class="product-card"><div class="product-title">Script OSINT</div><div class="product-desc">Script open source intelligence untuk pelacakan & analisis publik dengan fitur lengkap.</div></div>
-        <div class="product-card"><div class="product-title">Script Multi Device</div><div class="product-desc">Script WhatsApp bot multi-device yang support fitur AI, musik, auto-reply, dan lainnya.</div></div>
-        <div class="product-card"><div class="product-title">Reseller Panel</div><div class="product-desc">Ingin jualan panel juga? Daftar jadi reseller dan dapatkan harga spesial & fitur eksklusif.</div></div>
-        <div class="product-card"><div class="product-title">Admin Panel</div><div class="product-desc">Panel admin untuk kontrol penuh data user, transaksi, dan statistik dalam sistem kamu.</div></div>
-        <div class="product-card"><div class="product-title">Jasa Rename Script</div><div class="product-desc">Ganti nama, branding, atau watermark script kamu agar tampil profesional dan personal.</div></div>
-        <div class="product-card"><div class="product-title">Jasa Pembuatan Script</div><div class="product-desc">Terima pembuatan script custom sesuai request: bot, tools, AI, atau automasi lainnya.</div></div>
-        <div class="product-card"><div class="product-title">Jasa Fix Script Error</div><div class="product-desc">Butuh bantuin debug atau error di script? Kami bantu perbaiki dan jelaskan sampai tuntas!</div></div>
+        <div class="product-card"><div class="product-title">Panel Pterodactyl</div><div class="product-desc">Panel hosting termurah dan stabil, siap pakai!</div></div>
+        <div class="product-card"><div class="product-title">Script OSINT</div><div class="product-desc">Cek informasi target dari nomor, email, IP, dan lainnya.</div></div>
+        <div class="product-card"><div class="product-title">Script Multi Device</div><div class="product-desc">Bot WhatsApp multi device (MD) siap pakai dan powerful.</div></div>
+        <div class="product-card"><div class="product-title">Reseller Panel</div><div class="product-desc">Panel untuk reseller, bisa atur harga sendiri, support user banyak.</div></div>
+        <div class="product-card"><div class="product-title">Admin Panel</div><div class="product-desc">Khusus owner, bisa kelola semua user, cek log, dan fitur lengkap.</div></div>
+        <div class="product-card"><div class="product-title">Jasa Rename Script</div><div class="product-desc">Rename, obfuscate, dan protect script kamu agar aman & rapi.</div></div>
+        <div class="product-card"><div class="product-title">Jasa Pembuatan Script</div><div class="product-desc">Custom script sesuai request, mulai dari bot sampai panel.</div></div>
+        <div class="product-card"><div class="product-title">Jasa Fix Script Error</div><div class="product-desc">Script kamu error atau rusak? Kami bantu perbaiki dengan cepat.</div></div>
       </div>
     </div>
 
@@ -214,12 +216,13 @@
             <p><strong>OVO:</strong> 0882006455745</p>
             <p><strong>BCA:</strong> 7032981450</p>
             <br>
-            <p>💬 WhatsApp Order: <a href="https://wa.me/6281234567890">Klik untuk Chat</a></p>
+            <p>💬 WhatsApp Order: <a href="https://wa.me/62882006455745">Klik untuk Chat</a></p>
             <p>📎 Harap kirim bukti transfer untuk konfirmasi pesanan.</p>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 
   <footer>
@@ -253,4 +256,4 @@
     };
   </script>
 </body>
-</html
+</html>
